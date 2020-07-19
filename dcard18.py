@@ -1,7 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-
+"""
+dcard_sex(爬取次數,爬取文章篇數)
+titles_article_img()#爬取圖片方法
+"""
 class dcard_sex():
     """
     data['title']#各篇文章標題
