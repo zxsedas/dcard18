@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import os
 """
 dcard_sex(爬取次數,爬取文章篇數)
 titles_article_img()#爬取圖片方法
@@ -44,15 +45,20 @@ class dcard_sex():
         sex_soup = BeautifulSoup(sex_content.text, "html.parser")
         imgs = sex_soup.select("article div img")
         #print(imgs)
+        
 
-        for img in imgs:
-            #print(img["src"],self.j)
-            pic=requests.get(img["src"])
-            sex_img = pic.content
-            pic_out = open("imglib/{}.png".format(self.j), "wb")
-            pic_out.write(sex_img)
-            self.j += 1
-            pic_out.close()
+        if os.path.exists('imglib'):  
+            for img in imgs:
+                #print(img["src"],self.j)
+                pic=requests.get(img["src"])
+                sex_img = pic.content
+                pic_out = open("imglib/{}.png".format(self.j), "wb")
+                pic_out.write(sex_img)
+                self.j += 1
+                pic_out.close()
+        else:
+            print("建立imglib資料夾")
+            os.mkdir('imglib')
 
 
 tom=dcard_sex(3,100)
