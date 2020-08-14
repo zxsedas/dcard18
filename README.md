@@ -1,8 +1,5 @@
 # Dcard18
 
-You must create floder(name=imglib)
-
-
-
+pictures in folder(filename=imglib)
 
 Have a nice day~
