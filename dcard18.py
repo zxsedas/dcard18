@@ -2,9 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import time
+from concurrent import futures
+import sys
 """
 dcard_sex(爬取次數,爬取文章篇數)
 titles_article_img()#爬取圖片方法
+#執行範例 python ./dcard18.py 10
 """
 class dcard_sex():
     """
@@ -43,26 +47,36 @@ class dcard_sex():
     def crawl_img(self,url_article):
         sex_content = requests.get(url_article)
         sex_soup = BeautifulSoup(sex_content.text, "html.parser")
-        imgs = sex_soup.select("article div img")
-        #print(imgs)
-        
+        imgs = sex_soup.select("article div img")      
 
         if os.path.exists('imglib'):  
             for img in imgs:
                 #print(img["src"],self.j)
                 pic=requests.get(img["src"])
                 sex_img = pic.content
-                pic_out = open("imglib/{}.png".format(self.j), "wb")
-                pic_out.write(sex_img)
-                self.j += 1
-                pic_out.close()
+                with open("imglib/{}.png".format(self.j), "wb") as pic:
+                    pic.write(sex_img)
+                    self.j += 1
+                    pic.close()
         else:
-            print("建立imglib資料夾")
+            print("建立imglib資料夾\n")
             os.mkdir('imglib')
 
 
-tom=dcard_sex(3,100)
-tom.titles_article_img()
+def use_process(workers,obj):
+    t1 = time.time()
+    with futures.ProcessPoolExecutor(workers) as pex:
+        pex.map(obj.titles_article_img())
+    t2 = time.time()
+    print(f"Using {workers} workers 耗時{t2 - t1} seconds")
+
+if __name__ == '__main__':
+    tom=dcard_sex(3,100)
+    worker = int(sys.argv[1])
+    use_process(worker,tom)
+
+
+
 
 
             
