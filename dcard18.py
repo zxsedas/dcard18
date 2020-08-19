@@ -63,17 +63,17 @@ class dcard_sex():
             os.mkdir('imglib')
 
 
-def use_process(workers,obj):
+def use_process(obj,workers):
     t1 = time.time()
     with futures.ProcessPoolExecutor(workers) as pex:
         pex.map(obj.titles_article_img())
     t2 = time.time()
     print(f"Using {workers} workers 耗時{t2 - t1} seconds")
 
-if __name__ == '__main__':
-    tom=dcard_sex(3,100)
-    worker = int(sys.argv[1])
-    use_process(worker,tom)
+# #if __name__ == '__main__':
+#     tom=dcard_sex(3,100)
+#     #worker = int(sys.argv[1])
+#     use_process(tom)
 
 
 
