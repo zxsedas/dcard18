@@ -70,10 +70,10 @@ def use_process(obj,workers):
     t2 = time.time()
     print(f"Using {workers} workers 耗時{t2 - t1} seconds")
 
-# #if __name__ == '__main__':
-#     tom=dcard_sex(3,100)
-#     #worker = int(sys.argv[1])
-#     use_process(tom)
+if __name__ == '__main__':
+    tom=dcard_sex(1,10)
+    worker = int(sys.argv[1])
+    use_process(tom,worker)
 
 
 
